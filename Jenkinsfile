@@ -3,6 +3,9 @@ pipeline{
        environment{
         PATH="/root/lokii:$PATH"
        }
+      parameters{
+          string defaultValue: 'jenkins', description: 'asdkkjfas', name: 'name'
+       }
     stages{
          stage("git-checkout"){
             steps{
@@ -12,11 +15,14 @@ pipeline{
                 echo"Hello Worldssdsad"
             }
         }
-         stage("d"){
-            steps{
-                sh "mvn clean pakage"
-            }
-         }
+          stage("d"){
+            echo "hi ${name},ahdfajdf"
+        }
+//          stage("d"){
+//             steps{
+//                 sh "mvn clean pakage"
+//             }
+//          }
 
                     //  stage("Deploy"){
                     //    steps {
