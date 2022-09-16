@@ -18,31 +18,33 @@ pipeline{
           stage("d"){
               steps{
             echo "hi ${name},ahdfajdf"
+		      sh "printenv"
               }
         }
+	    
         
-          stage("Deploy"){
-           steps {
-				sh """
-                if [ ! "$(docker ps -q -f name=9toys.com)" ]; then
-                docker run --detach --restart unless-stopped --name 9toys.com --env "VIRTUAL_HOST=9toys.com" --env "LETSENCRYPT_HOST=9toys.com" 9930i/9toys_ng:prod
-                if [ ! "$(docker inspect -f {{.State.Running}} 9toys.com)" ]; then
-                    exit 1	
-                fi
-                docker ps -a
-            else
-                docker stop 9toys.com
-                docker rm 9toys.com
-                docker rmi 9930i/9toys_ng:prod
-                docker run --detach --restart unless-stopped --name 9toys.com --env "VIRTUAL_HOST=9toys.com" --env "LETSENCRYPT_HOST=9toys.com" 9930i/9toys_ng:prod
-                if [ ! "$(docker inspect -f {{.State.Running}} 9toys.com)" ]; then
-                    exit 1	
-                fi
-                docker ps -a
-            fi
-                            """
-			}
-         }
+//           stage("Deploy"){
+//            steps {
+// 				sh """
+//                 if [ ! "$(docker ps -q -f name=9toys.com)" ]; then
+//                 docker run --detach --restart unless-stopped --name 9toys.com --env "VIRTUAL_HOST=9toys.com" --env "LETSENCRYPT_HOST=9toys.com" 9930i/9toys_ng:prod
+//                 if [ ! "$(docker inspect -f {{.State.Running}} 9toys.com)" ]; then
+//                     exit 1	
+//                 fi
+//                 docker ps -a
+//             else
+//                 docker stop 9toys.com
+//                 docker rm 9toys.com
+//                 docker rmi 9930i/9toys_ng:prod
+//                 docker run --detach --restart unless-stopped --name 9toys.com --env "VIRTUAL_HOST=9toys.com" --env "LETSENCRYPT_HOST=9toys.com" 9930i/9toys_ng:prod
+//                 if [ ! "$(docker inspect -f {{.State.Running}} 9toys.com)" ]; then
+//                     exit 1	
+//                 fi
+//                 docker ps -a
+//             fi
+//                             """
+// 			}
+//          }
 
 //          stage("d"){
 //             steps{
