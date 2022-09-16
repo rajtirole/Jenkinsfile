@@ -1,16 +1,22 @@
 pipeline{
     agent any
        environment{
-        PATH_JENKINS="/root/lokii:$PATH"
+        PATH="/root/lokii:$PATH"
        }
     stages{
          stage("git-checkout"){
             steps{
-                    echo"Hello Worldssdsad"
-                    echo "========executing A========"
+                    
+                
               git branch: 'main', url: 'https://github.com/rajtirole/Jenkinsfile'
+                echo"Hello Worldssdsad"
             }
         }
+         stage("d"){
+            steps{
+                sh "mvn clean pakage"
+            }
+         }
 
                     //  stage("Deploy"){
                     //    steps {
