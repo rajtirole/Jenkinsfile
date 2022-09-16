@@ -4,7 +4,8 @@ pipeline{
     stages{
         stage("git-checkout"){
             steps{
-
+                    echo 'Hello World'
+              git branch: 'main', url: 'https://github.com/rajtirole/Jenkinsfile'
             }
         }
         stage("A"){
