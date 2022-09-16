@@ -5,10 +5,9 @@ pipeline{
        }
       parameters{
           string defaultValue: 'ContainerNameDefault', description: 'Container name which should be given to Docker container', name: 'ContainerName'
+	  string defaultValue: 'ubuntu', description: 'Image to pull from Docker Hub ', name: 'ImageName'
        }
-	 parameters{
-          string defaultValue: 'ubuntu', description: 'Image to pull from Docker Hub ', name: 'ImageName'
-       }
+	
     stages{
          stage("git-checkout"){
             steps{
