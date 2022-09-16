@@ -1,6 +1,8 @@
 pipeline{
     agent any
-       
+        environment{
+        PATH_JENKINS="/root/lokii:$PATH"
+       }
     stages{
         stage("git-checkout"){
             steps{
