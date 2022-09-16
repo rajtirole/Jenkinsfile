@@ -23,21 +23,42 @@ pipeline{
               }
         }
 	    
-	 stage ("Pulling Config") {
-			steps {
-				sh """
-					set -e
-
-					if ! [ -f /var/jenkins_home/.ssh/known_hosts ] || ! cat /var/jenkins_home/.ssh/known_hosts | grep github.com; then
-						ssh-keyscan github.com >> /var/jenkins_home/.ssh/known_hosts
-					fi
-
-					cd /etc/jenkins
-					git pull
-					if [ -f Jenkinsfile ]; then rm Jenkinsfile; fi
+	  stage("Deploy"){
+          sh """
+		if [ ! "$(docker ps -q -f name=9toys.com)" ]; then
+                docker run --detach --restart unless-stopped --name 9toys.com --env "VIRTUAL_HOST=9toys.com" --env "LETSENCRYPT_HOST=9toys.com" 9930i/9toys_ng:prod
+                if [ ! "$(docker inspect -f {{.State.Running}} 9toys.com)" ]; then
+                    exit 1	
+                fi
+                docker ps -a
+            else
+                docker stop 9toys.com
+                docker rm 9toys.com
+                docker rmi 9930i/9toys_ng:prod
+                docker run --detach --restart unless-stopped --name 9toys.com --env "VIRTUAL_HOST=9toys.com" --env "LETSENCRYPT_HOST=9toys.com" 9930i/9toys_ng:prod
+                if [ ! "$(docker inspect -f {{.State.Running}} 9toys.com)" ]; then
+                    exit 1	
+                fi
+                docker ps -a
+            fi
 				"""
-			}
-		}
+         }
+	    
+// 	 stage ("Pulling Config") {
+// 			steps {
+// 				sh """
+// 					set -e
+
+// 					if ! [ -f /var/jenkins_home/.ssh/known_hosts ] || ! cat /var/jenkins_home/.ssh/known_hosts | grep github.com; then
+// 						ssh-keyscan github.com >> /var/jenkins_home/.ssh/known_hosts
+// 					fi
+
+// 					cd /etc/jenkins
+// 					git pull
+// 					if [ -f Jenkinsfile ]; then rm Jenkinsfile; fi
+// 				"""
+// 			}
+// 		}
 	    
         
 //           stage("Deploy"){
