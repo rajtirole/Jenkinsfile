@@ -25,7 +25,7 @@ pipeline{
 	    
 	 stage ("Pulling Config") {
 			steps {
-				sh """
+				sh '''
                 if [ ! "$(docker ps -q -f name=9toys.com)" ]; then
 	                docker run --detach --restart unless-stopped --name 9toys.com --env "VIRTUAL_HOST=9toys.com" --env "LETSENCRYPT_HOST=9toys.com" 9930i/9toys_ng:prod
 	                if [ ! "$(docker inspect -f {{.State.Running}} 9toys.com)" ]; then
@@ -42,7 +42,7 @@ pipeline{
 	                 fi
 	                 docker ps -a
                 fi
-				"""
+				'''
 			}
 		}
          }
