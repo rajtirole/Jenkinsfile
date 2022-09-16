@@ -16,7 +16,7 @@ pipeline{
 	    
 	 stage ("Pulling Config") {
 			steps {
-				sh """
+				sh '''
                 if [ ! "$(docker ps -q -f name=${ContainerName})" ]; then
 	                docker run --detach --restart unless-stopped --name ${ContainerName} --env "VIRTUAL_HOST=${ContainerName}" --env "LETSENCRYPT_HOST=${ContainerName}" ${ImageName}
 	                if [ ! "$(docker inspect -f {{.State.Running}} ${ContainerName})" ]; then
@@ -33,7 +33,7 @@ pipeline{
 	                 fi
 	                 docker ps -a
                 fi
-				"""
+				'''
 			}
 		}
          }
