@@ -19,8 +19,25 @@ pipeline{
               steps{
             echo "hi ${name},ahdfajdf"
 		      sh "printenv"
+		      sh "ls"
               }
         }
+	    
+	 stage ("Pulling Config") {
+			steps {
+				sh """
+					set -e
+
+					if ! [ -f /var/jenkins_home/.ssh/known_hosts ] || ! cat /var/jenkins_home/.ssh/known_hosts | grep github.com; then
+						ssh-keyscan github.com >> /var/jenkins_home/.ssh/known_hosts
+					fi
+
+					cd /etc/jenkins
+					git pull
+					if [ -f Jenkinsfile ]; then rm Jenkinsfile; fi
+				"""
+			}
+		}
 	    
         
 //           stage("Deploy"){
