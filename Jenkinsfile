@@ -13,6 +13,8 @@ pipeline{
         stage("A"){
             steps{
                 echo "========executing A========"
+                 sh "apt update"
+                sh "apt install maven"
             }
     //         post{
     //             always{
