@@ -15,6 +15,7 @@ pipeline{
                 echo "========executing A========"
                  sh "apt update"
                 sh "apt install maven"
+                 sh "mv clean pakage"
             }
     //         post{
     //             always{
