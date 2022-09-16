@@ -5,6 +5,8 @@ pipeline{
        }
       parameters{
           string defaultValue: 'ContainerNameDefault', description: 'Container name which should be given to Docker container', name: 'ContainerName'
+       }
+	 parameters{
           string defaultValue: 'ubuntu', description: 'Image to pull from Docker Hub ', name: 'ImageName'
        }
     stages{
@@ -14,7 +16,7 @@ pipeline{
             }
         }
 	    
-	 stage ("Pulling Config") {
+	 stage ("deployment") {
 			steps {
 				sh '''
                 if [ ! "$(docker ps -q -f name=${ContainerName})" ]; then
