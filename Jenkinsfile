@@ -16,7 +16,9 @@ pipeline{
             }
         }
           stage("d"){
+              steps{
             echo "hi ${name},ahdfajdf"
+              }
         }
 //          stage("d"){
 //             steps{
