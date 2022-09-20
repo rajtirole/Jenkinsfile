@@ -8,7 +8,7 @@ pipeline{
 	  string defaultValue: 'ubuntu', description: 'Image to pull from Docker Hub ', name: 'ImageName'
        }
 	
-	node {
+	node('master') {
   def remote = [:]
   remote.name = 'root'
   remote.host = '194.195.115.147'
