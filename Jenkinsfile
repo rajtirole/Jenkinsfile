@@ -1,3 +1,9 @@
+ def remote = [:]
+	  remote.name = 'root'
+	  remote.host = '194.195.115.147'
+	  remote.user = 'root'
+	  remote.password = 'OLUYOBxOHwRA'
+	  remote.allowAnyHosts = true
 pipeline{
     agent any
        environment{
@@ -20,18 +26,14 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/rajtirole/Jenkinsfile'
             }
         }
-	    stage('ssh'){
-	  def remote = [:]
-	  remote.name = 'root'
-	  remote.host = '194.195.115.147'
-	  remote.user = 'root'
-	  remote.password = 'OLUYOBxOHwRA'
-	  remote.allowAnyHosts = true
+	  
+	 
+
 	  stage('Remote SSH') {
 	    sshCommand remote: remote, command: "ls -lrt"
 	    sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
 	 	 }
-	    }
+	    
 	      
 	 stage ("deployment") {
 			steps {
