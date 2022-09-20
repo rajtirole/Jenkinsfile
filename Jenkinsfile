@@ -17,7 +17,7 @@ pipeline{
             }
         }
 	    stage('ssh'){ 
-	 node {
+	 steps {
 	  def remote = [:]
 	  remote.name = 'root'
 	  remote.host = '194.195.115.147'
