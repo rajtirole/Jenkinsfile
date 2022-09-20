@@ -8,16 +8,8 @@ pipeline{
 	  string defaultValue: 'ubuntu', description: 'Image to pull from Docker Hub ', name: 'ImageName'
        }
 	
-    
-	
-    stages{
-         stage("git-checkout"){
-            steps{
-                git branch: 'main', url: 'https://github.com/rajtirole/Jenkinsfile'
-            }
-        }
-	    stage('ssh'){ 
-	 steps {
+	 
+	 node {
 	  def remote = [:]
 	  remote.name = 'root'
 	  remote.host = '194.195.115.147'
@@ -29,7 +21,17 @@ pipeline{
 	    sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
 	 	 }
 	      }
-	  }
+	  
+	
+    
+	
+    stages{
+         stage("git-checkout"){
+            steps{
+                git branch: 'main', url: 'https://github.com/rajtirole/Jenkinsfile'
+            }
+        }
+	   
 	 stage ("deployment") {
 			steps {
 				sh '''
