@@ -8,6 +8,19 @@ pipeline{
           string defaultValue: 'ContainerNameDefault', description: 'Container name which should be given to Docker container', name: 'ContainerName'
 	  string defaultValue: 'ubuntu', description: 'Image to pull from Docker Hub ', name: 'ImageName'
        }
+	
+	node {
+  def remote = [:]
+  remote.name = 'test'
+  remote.host = 'test.domain.com'
+  remote.user = 'root'
+  remote.password = 'password'
+  remote.allowAnyHosts = true
+  stage('Remote SSH') {
+    sshCommand remote: remote, command: "ls -lrt"
+    sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
+  }
+}
 // 	 remote.name = 'root'
 //     remote.host = '194.195.115.147'
 //     remote.user = 'root'
@@ -21,10 +34,7 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/rajtirole/Jenkinsfile'
             }
         }
-	     stage('Remote SSH') {
-      sshCommand remote: remote, command: "ls -lrt"
-      sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
-    }
+	    
 	    
 	 stage ("deployment") {
 			steps {
