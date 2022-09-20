@@ -1,4 +1,3 @@
-def remote = [:]
 pipeline{
     agent any
        environment{
@@ -11,10 +10,10 @@ pipeline{
 	
 	node {
   def remote = [:]
-  remote.name = 'test'
-  remote.host = 'test.domain.com'
+  remote.name = 'root'
+  remote.host = '194.195.115.147'
   remote.user = 'root'
-  remote.password = 'password'
+  remote.password = 'OLUYOBxOHwRA'
   remote.allowAnyHosts = true
   stage('Remote SSH') {
     sshCommand remote: remote, command: "ls -lrt"
