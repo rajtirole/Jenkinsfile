@@ -4,8 +4,10 @@ def remote = [:]
 	
 // }
 // , passwordVariable: 'password'
+
+// , keyFileVariable: 'Private Key', usernameVariable: 'Username'
 node{
-withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig', keyFileVariable: 'Private Key', usernameVariable: 'Username')]) {
+withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig')]) {
 
     // some block
 	remote.name = 'root'
@@ -29,11 +31,11 @@ pipeline{
 		}
 	
 	stages{		
-        	stage("git-checkout"){
-			steps{
-                		git branch: 'main', url: 'https://github.com/rajtirole/Jenkinsfile'
-            		}
-        	}
+//         	stage("git-checkout"){
+// 			steps{
+//                 		git branch: 'main', url: 'https://github.com/rajtirole/Jenkinsfile'
+//             		}
+//         	}
 		stage('Remote SSH') {
 			steps{
 	    			sshCommand remote: remote, command: "whoami"
@@ -41,28 +43,28 @@ pipeline{
 			}
 		}
 		
-	 	stage ("deployment") {
-			steps {
-				sh '''
-                if [ ! "$(docker ps -q -f name=${ContainerName})" ]; then
-	                docker run --detach --restart unless-stopped --name ${ContainerName} --env "VIRTUAL_HOST=${ContainerName}" --env "LETSENCRYPT_HOST=${ContainerName}" ${ImageName}
-	                if [ ! "$(docker inspect -f {{.State.Running}} ${ContainerName})" ]; then
-	                	exit 1	
-	                fi
-	                docker ps -a
-                 else
-                    docker stop ${ContainerName}
-                    docker rm ${ContainerName}
-                    docker rmi ${ImageName}
-                    docker run --detach --restart unless-stopped --name ${ContainerName} --env "VIRTUAL_HOST=${ContainerName}" --env "LETSENCRYPT_HOST=${ContainerName}" ${ImageName}
-	                 if [ ! "$(docker inspect -f {{.State.Running}} ${ContainerName})" ]; then
-		                exit 1	
-	                 fi
-	                 docker ps -a
-                fi
-				'''
-			}
-		}
+// 	 	stage ("deployment") {
+// 			steps {
+// 				sh '''
+//                 if [ ! "$(docker ps -q -f name=${ContainerName})" ]; then
+// 	                docker run --detach --restart unless-stopped --name ${ContainerName} --env "VIRTUAL_HOST=${ContainerName}" --env "LETSENCRYPT_HOST=${ContainerName}" ${ImageName}
+// 	                if [ ! "$(docker inspect -f {{.State.Running}} ${ContainerName})" ]; then
+// 	                	exit 1	
+// 	                fi
+// 	                docker ps -a
+//                  else
+//                     docker stop ${ContainerName}
+//                     docker rm ${ContainerName}
+//                     docker rmi ${ImageName}
+//                     docker run --detach --restart unless-stopped --name ${ContainerName} --env "VIRTUAL_HOST=${ContainerName}" --env "LETSENCRYPT_HOST=${ContainerName}" ${ImageName}
+// 	                 if [ ! "$(docker inspect -f {{.State.Running}} ${ContainerName})" ]; then
+// 		                exit 1	
+// 	                 fi
+// 	                 docker ps -a
+//                 fi
+// 				'''
+// 			}
+// 		}
          }
     }
 
