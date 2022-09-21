@@ -4,17 +4,6 @@ def remote = [:]
 	
 // }
 // , passwordVariable: 'password'
-node{
-	withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig', keyFileVariable: 'jkonfig', usernameVariable: 'ec2-user')]) {
-
-	    // some block
-		remote.name = 'root'
-		remote.host = '18.218.57.254'
-		remote.user = 'ec2-user'
-		remote.identityFile = jkonfig
-	// 	remote.password = '${password}'
-		remote.allowAnyHosts = true
-	}
 
 
 	
@@ -34,11 +23,26 @@ pipeline{
                 		git branch: 'main', url: 'https://github.com/rajtirole/Jenkinsfile'
             		}
         	}
-	  	stage('Remote SSH') {
+	  	
+		
+		node{
+		withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig', keyFileVariable: 'jkonfig', usernameVariable: 'ec2-user')]) {
+
+		    // some block
+			remote.name = 'root'
+			remote.host = '18.218.57.254'
+			remote.user = 'ec2-user'
+			remote.identityFile = jkonfig
+		// 	remote.password = '${password}'
+			remote.allowAnyHosts = true
+		
+
+		stage('Remote SSH') {
 			steps{
 	    			sshCommand remote: remote, command: "ls -lrt"
 	    			sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
 			}
+		}
 		}
 	 	stage ("deployment") {
 			steps {
@@ -64,4 +68,4 @@ pipeline{
 		}
          }
     }
-}
+
