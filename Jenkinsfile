@@ -5,7 +5,7 @@ def remote = [:]
 // }
 // , passwordVariable: 'password'
 node{
-withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig', keyFileVariable: 'jkonfig', usernameVariable: 'ec2-user')]) {
+withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig', keyFileVariable: 'Private Key', usernameVariable: 'Username')]) {
 
     // some block
 	remote.name = 'root'
