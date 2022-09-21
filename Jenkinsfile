@@ -1,12 +1,17 @@
 def remote = [:]
-withCredentials([usernamePassword(credentialsId: 'instance', passwordVariable: 'Password', usernameVariable: 'User')]) {
+// withCredentials([usernamePassword(credentialsId: 'instance', passwordVariable: 'Password', usernameVariable: 'User')]) {
+//     // some block
+	
+// }
+withCredentials([usernamePassword(credentialsId: 'Instance', passwordVariable: 'password', usernameVariable: 'username')]) {
     // some block
-	remote.name = 'User'
+	remote.name = 'root'
 	remote.host = '194.195.115.147'
-	remote.user = 'User'
-	remote.password = 'Password'
+	remote.user = 'root'
+	remote.password = 'OLUYOBxOHwRA'
 	remote.allowAnyHosts = true
 }
+
 	
 pipeline{
 	agent any
