@@ -13,7 +13,7 @@ withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig')]) {
 	remote.name = 'root'
 	remote.host = '18.218.57.254'
 	remote.user = 'ec2-user'
-	remote.identityFile = 'Private Key'
+// 	remote.identityFile = 'Private Key'
 // 	remote.password = '${password}'
 	remote.allowAnyHosts = true
 }			
