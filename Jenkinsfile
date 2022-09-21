@@ -15,7 +15,7 @@ node{
 	// 	remote.password = '${password}'
 		remote.allowAnyHosts = true
 	}
-}
+
 
 	
 pipeline{
@@ -64,3 +64,4 @@ pipeline{
 		}
          }
     }
+}
