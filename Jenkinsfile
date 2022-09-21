@@ -4,11 +4,13 @@ def remote = [:]
 	
 // }
 // , passwordVariable: 'password'
-withCredentials([usernamePassword(credentialsId: 'jkonfig', usernameVariable: 'ec2-user')]) {
+withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig', keyFileVariable: 'jkonfig', usernameVariable: 'ec2-user')]) {
+
     // some block
 	remote.name = 'root'
 	remote.host = '18.218.57.254'
-// 	remote.user = '${username}'
+	remote.user = 'ec2-user'
+	remote.identityFile = identity
 // 	remote.password = '${password}'
 	remote.allowAnyHosts = true
 }
