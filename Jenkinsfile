@@ -5,10 +5,10 @@ def remote = [:]
 // }
 withCredentials([usernamePassword(credentialsId: 'Instance', passwordVariable: 'password', usernameVariable: 'username')]) {
     // some block
-	remote.name = 'root'
+	remote.name = 'username'
 	remote.host = '194.195.115.147'
 	remote.user = 'root'
-	remote.password = 'OLUYOBxOHwRA'
+	remote.password = 'password'
 	remote.allowAnyHosts = true
 }
 
