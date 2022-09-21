@@ -3,12 +3,13 @@ def remote = [:]
 //     // some block
 	
 // }
-withCredentials([usernamePassword(credentialsId: 'Instance', passwordVariable: 'password', usernameVariable: 'username')]) {
+// , passwordVariable: 'password'
+withCredentials([usernamePassword(credentialsId: 'jkonfig', usernameVariable: 'ec2-user')]) {
     // some block
 	remote.name = 'root'
-	remote.host = '194.195.115.147'
-	remote.user = '${username}'
-	remote.password = '${password}'
+	remote.host = '18.218.57.254'
+// 	remote.user = '${username}'
+// 	remote.password = '${password}'
 	remote.allowAnyHosts = true
 }
 
