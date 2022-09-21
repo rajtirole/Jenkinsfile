@@ -6,7 +6,7 @@ remote.allowAnyHosts = true
 node {
     withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig', keyFileVariable: 'jkonfig', usernameVariable: 'userName')]) {
         remote.user = userName
-        remote.identityFile = identity
+        remote.identityFile = jkonfig
         stage("SSH Steps Rocks!") {
             writeFile file: 'abc.sh', text: 'ls'
             sshCommand remote: remote, command: 'for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done'
