@@ -4,6 +4,16 @@ def remote = [:]
 	
 // }
 // , passwordVariable: 'password'
+withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig', keyFileVariable: 'jkonfig', usernameVariable: 'ec2-user')]) {
+
+    // some block
+	remote.name = 'root'
+	remote.host = '18.218.57.254'
+	remote.user = 'ec2-user'
+	remote.identityFile = jkonfig
+// 	remote.password = '${password}'
+	remote.allowAnyHosts = true
+}			
 
 
 	
@@ -17,20 +27,7 @@ pipeline{
 		string defaultValue: 'ubuntu', description: 'Image to pull from Docker Hub ', name: 'ImageName'
 		}
 	
-// 	stages{
-	node{
-		withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig', keyFileVariable: 'jkonfig', usernameVariable: 'ec2-user')]) {
-
-		    // some block
-			remote.name = 'root'
-			remote.host = '18.218.57.254'
-			remote.user = 'ec2-user'
-			remote.identityFile = jkonfig
-		// 	remote.password = '${password}'
-			remote.allowAnyHosts = true
-			
-			
-			
+	stages{		
         	stage("git-checkout"){
 			steps{
                 		git branch: 'main', url: 'https://github.com/rajtirole/Jenkinsfile'
@@ -64,7 +61,6 @@ pipeline{
                 fi
 				'''
 			}
-		}
 		}
          }
     }
