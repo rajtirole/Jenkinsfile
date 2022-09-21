@@ -4,6 +4,7 @@ def remote = [:]
 	
 // }
 // , passwordVariable: 'password'
+node{
 withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig', keyFileVariable: 'jkonfig', usernameVariable: 'ec2-user')]) {
 
     // some block
@@ -14,7 +15,7 @@ withCredentials([sshUserPrivateKey(credentialsId: 'jkonfig', keyFileVariable: 'j
 // 	remote.password = '${password}'
 	remote.allowAnyHosts = true
 }			
-
+}
 
 	
 pipeline{
