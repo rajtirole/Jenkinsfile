@@ -11,7 +11,7 @@ node{
 		remote.name = 'root'
 		remote.host = '18.218.57.254'
 		remote.user = 'ec2-user'
-		remote.identityFile = identity
+		remote.identityFile = jkonfig
 	// 	remote.password = '${password}'
 		remote.allowAnyHosts = true
 	}
